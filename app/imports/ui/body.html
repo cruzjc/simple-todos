@@ -1,4 +1,28 @@
 <body>
+
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '201226273689986',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) {return;}
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+
+
+
+
 <div class="container">
   <header>
     <h1>Todo List ({{incompleteCount}})</h1>
@@ -8,10 +32,26 @@
       Hide Completed Tasks
     </label>
 
+    {{> loginButtons}}
+
+    {{#if currentUser}}
     <form class="new-task">
       <input type="text" name="text" placeholder="Type to add new tasks" />
     </form>
+    {{/if}}
   </header>
+
+  <div
+      class="fb-like"
+      data-share="true"
+      data-width="450"
+      data-show-faces="true">
+  </div>
+  <div class="fb-share-button"
+       data-href="www.google.com"
+       data-layout="button_count">
+  </div>
+
 
   <ul>
     {{#each tasks}}

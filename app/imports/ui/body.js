@@ -1,13 +1,15 @@
+import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Tasks } from '../api/tasks.js';
 
-import './task';
+import './task.js';
 import './body.html';
 
 Template.body.onCreated(function bodyOnCreated() {
   this.state = new ReactiveDict();
+  Meteor.subscribe('tasks');
 });
 
 Template.body.helpers({
@@ -43,10 +45,17 @@ Template.body.events({
     Tasks.insert({
       text,
       createdAt: new Date(), // current time
+      owner: Meteor.userId(),
+      username: Meteor.user().username,
     });
 
     // Clear form
     target.text.value = '';
+
+
+    console.log(Meteor.userId());
+    console.log(Meteor.user());
+    console.log(Meteor.user().profile.name);
   },
 
   'change .hide-completed input'(event, instance) {
